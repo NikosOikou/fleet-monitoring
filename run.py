@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, jsonify
+from flask import Flask, jsonify, render_template
 
 from helper import get_route_data, get_stop_locations
 from process import (avg_speed_by_hour, max_wind_speed_by_hour,
@@ -8,6 +8,7 @@ from process import (avg_speed_by_hour, max_wind_speed_by_hour,
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 MAPBOX_ACCESS_KEY = os.environ.get('MAPBOX_ACCESS_KEY')
 DEBUG = os.environ.get('DEBUG')
@@ -45,12 +46,12 @@ def index():
 
 @app.route('/metrics')
 def metrics():
-    return {
+    return jsonify({
         'num_ships': num_ships,
         'avg_speed_by_hour': avg_speed_by_hour,
         'min_wind_speed_by_hour': min_wind_speed_by_hour,
         'max_wind_speed_by_hour': max_wind_speed_by_hour,
-    }
+    })
 
 
 @app.route('/route')
