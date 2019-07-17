@@ -1,6 +1,5 @@
 .DS_Store
 *.pdf
 *.pyc
-*.csv
 *.ipynb
 local_setup
